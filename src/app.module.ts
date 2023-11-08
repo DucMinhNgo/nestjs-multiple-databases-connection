@@ -10,10 +10,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 4306,
+      port: 3308,
       username: 'root',
-      password: 'root',
-      database: '123456',
+      password: 'mypass',
+      database: 'dustin_pro',
       entities: [],
       synchronize: true,
     }),
