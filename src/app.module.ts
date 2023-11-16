@@ -7,22 +7,14 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { PhotosModule } from './photos/photos.module';
 import { Photo } from './photos/entities/photo.entity';
+import { mysqlMasterConfig, mysqlSlave1Config, mysqlSlave2Config } from './config/databases/mysql';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      // name: 'master',
-      host: 'localhost',
-      port: 3308,
-      username: 'root',
-      password: 'mypass',
-      database: 'dustin_pro',
-      entities: [User, Photo],
-      synchronize: true,
-      autoLoadEntities: true,
-    }),
+    TypeOrmModule.forRoot(mysqlMasterConfig),
+    TypeOrmModule.forRoot(mysqlSlave1Config),
+    TypeOrmModule.forRoot(mysqlSlave2Config),
     UsersModule,
     PhotosModule,
   ],
