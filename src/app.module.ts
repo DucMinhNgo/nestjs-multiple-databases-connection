@@ -4,35 +4,27 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { User } from './users/entities/user.entity';
 import { PhotosModule } from './photos/photos.module';
-import { Photo } from './photos/entities/photo.entity';
 import { mysqlMasterConfig, mysqlSlave1Config, mysqlSlave2Config } from './config/databases/mysql';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CatsModule } from './cats/cats.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { mongoMasterConfig } from './config/databases/mongo';
+import { Post } from './posts/post.entity';
+import { DATABASE_ENUM } from './config/databases/enum';
+import { PostsController } from './posts/posts.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    ThrottlerModule.forRoot(),
-    TypeOrmModule.forRoot(mysqlMasterConfig),
-    TypeOrmModule.forRoot(mysqlSlave1Config),
-    TypeOrmModule.forRoot(mysqlSlave2Config),
-    // MongooseModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: async (configService: ConfigService) => ({
-    //     uri: configService.get<string>('mongodb://192.168.1.1:27021'),
-    //     dbName: configService.get<string>('DUSTIN'),
-    //   }),
-    //   inject: [ConfigService],
-    // }),
-    MongooseModule.forRoot('mongodb://localhost:27022/DB'),
-    UsersModule,
-    PhotosModule,
-    CatsModule,
+    // ConfigModule.forRoot(),
+    // ThrottlerModule.forRoot(),
+    // TypeOrmModule.forRoot(mysqlMasterConfig),
+    // TypeOrmModule.forRoot(mysqlSlave1Config),
+    // TypeOrmModule.forRoot(mysqlSlave2Config),
+    TypeOrmModule.forRoot(mongoMasterConfig),
+    TypeOrmModule.forFeature([Post], DATABASE_ENUM.MONGO_MASTER),
+    // UsersModule,
+    // PhotosModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, PostsController],
   providers: [AppService],
 })
 export class AppModule { }

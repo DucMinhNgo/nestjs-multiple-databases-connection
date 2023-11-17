@@ -6,7 +6,9 @@ import { User } from './entities/user.entity';
 import { DATABASE_ENUM } from '../config/databases/enum';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User], DATABASE_ENUM.MYSQL_MASTER), TypeOrmModule.forFeature([User], DATABASE_ENUM.MYSQL_SLAVE1)],
+  imports: [
+    TypeOrmModule.forFeature([User], DATABASE_ENUM.MYSQL_MASTER),
+    TypeOrmModule.forFeature([User], DATABASE_ENUM.MYSQL_SLAVE1)],
   controllers: [UsersController],
   providers: [UsersService],
   exports: [TypeOrmModule]
